@@ -14,5 +14,5 @@ export default async function handler(
     "utf8"
   );
   //Return the content of the data file in json format
-  res.status(200 as any).json(JSON.parse(fileContents).users[0]);
+  res.status(200).json(JSON.parse(fileContents).users[0]);
 }

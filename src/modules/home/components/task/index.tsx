@@ -1,4 +1,5 @@
 import { AppContext } from "@/contexts/app";
+import { WithoutId } from "@/interfaces";
 import { EditOutlined, RestOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Popconfirm, Typography } from "antd";
 import { FC, useContext, useEffect, useState } from "react";
@@ -86,7 +87,7 @@ const Task: FC<TaskProps> = ({ task }) => {
           onClose={() => setIsEditing(false)}
           isEditing
           task={task}
-          onConfirm={(data: any) => {
+          onConfirm={(data: WithoutId<Task>) => {
             updateTask({ ...data, id: task.id });
           }}
         />

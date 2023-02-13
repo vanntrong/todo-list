@@ -10,7 +10,7 @@ interface Response {
 
 const useGetTasks = () => {
   return useQuery(["tasks"], async () => {
-    return request.get<any, Response>("/user-tasks");
+    return request.get<void, Response>("/user-tasks");
   });
 };
 

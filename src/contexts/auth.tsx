@@ -24,7 +24,9 @@ export const AuthContext = createContext({});
 /**
  * Auth Provider
  */
-export const AuthProvider: FC<{ children: any }> = ({ children }) => {
+export const AuthProvider: FC<{ children: React.ReactNode }> = ({
+  children,
+}) => {
   const router = useRouter();
   const user = useContext(AppContext);
   const accessToken = getCookie("token");
