@@ -18,5 +18,8 @@ export interface SEO {
 }
 
 export interface User {
+  id: string;
   name: string;
 }
+
+export type WithoutId<T> = { [K in Exclude<keyof T, "id">]?: T[K] } & {};

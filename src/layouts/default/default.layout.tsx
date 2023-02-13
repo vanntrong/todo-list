@@ -1,3 +1,5 @@
+import Header from "@/components/header";
+import Sidebar from "@/components/sidebar";
 import { SEO } from "@/constants/seo";
 import { SEO as SEO_INTERFACE } from "@/interfaces";
 import Head from "next/head";
@@ -56,7 +58,13 @@ export default function DefaultLayout({
           sizes="192x192"
         />
       </Head>
-      <div>{children}</div>
+      <div>
+        <Header />
+        <main className="flex items-start">
+          {/* <Sidebar /> */}
+          {children}
+        </main>
+      </div>
     </>
   );
 }
