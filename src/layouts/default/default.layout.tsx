@@ -1,10 +1,14 @@
+import Header from "@/components/header";
+import Sidebar from "@/components/sidebar";
 import { SEO } from "@/constants/seo";
-import { SEO as SEO_INTERFACE } from "@/interfaces";
+import { ISEO } from "@/interfaces";
+import clsx from "clsx";
 import Head from "next/head";
+import { useState } from "react";
 
 interface DefaultLayoutProps {
   children: React.ReactNode;
-  seo?: SEO_INTERFACE;
+  seo?: ISEO;
 }
 
 export default function DefaultLayout({
@@ -23,6 +27,8 @@ export default function DefaultLayout({
     twitter = SEO.twitter,
     facebook = SEO.facebook,
   } = seo;
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
   return (
     <>
       <Head>
@@ -56,7 +62,14 @@ export default function DefaultLayout({
           sizes="192x192"
         />
       </Head>
-      <div>{children}</div>
+      <div>
+        <Header onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
+        <main className="flex h-full min-h-screen">
+          <Sidebar isOpen={isSidebarOpen} />
+
+          {children}
+        </main>
+      </div>
     </>
   );
 }

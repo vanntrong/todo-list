@@ -2,11 +2,11 @@ import { API_URL } from "@/constants";
 import axios from "axios";
 import { getCookie } from "./cookie";
 
-const axiosInstance = axios.create({
+const request = axios.create({
   baseURL: API_URL,
 });
 
-axiosInstance.interceptors.request.use((config) => {
+request.interceptors.request.use((config) => {
   const token = getCookie("token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
@@ -15,6 +15,8 @@ axiosInstance.interceptors.request.use((config) => {
   return config;
 });
 
-// axiosInstance.interceptors.response.use()
+request.interceptors.response.use((response) => {
+  return response.data;
+});
 
-export default axiosInstance;
+export default request;

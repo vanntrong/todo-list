@@ -1,4 +1,6 @@
-export interface SEO {
+import { IListTask } from "@/modules/home/interfaces/task.interface";
+
+export interface ISEO {
   title?: string;
   description?: string;
   keywords?: string;
@@ -17,6 +19,10 @@ export interface SEO {
   };
 }
 
-export interface User {
+export interface IUser {
+  id: string;
   name: string;
+  list_tasks: IListTask[];
 }
+
+export type WithoutId<T> = { [K in Exclude<keyof T, "id">]?: T[K] } & {};

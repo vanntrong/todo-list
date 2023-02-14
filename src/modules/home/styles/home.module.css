@@ -1,0 +1,7 @@
+.page-title {
+  @apply text-[20px] font-bold !important;
+}
+
+.page-space {
+  @apply w-full !important;
+}

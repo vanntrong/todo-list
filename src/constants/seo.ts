@@ -1,6 +1,6 @@
-import { SEO as SEO_INTERFACE } from "@/interfaces";
+import { ISEO } from "@/interfaces";
 
-export const SEO: SEO_INTERFACE = {
+export const SEO: ISEO = {
   title: "Todo list",
   description: "Simple todo list",
   keywords: "todo, list, react, typescript, redux, redux-saga",
