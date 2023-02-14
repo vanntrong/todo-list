@@ -2,7 +2,7 @@ import { pageRoutes } from "@/configs/navigations";
 import { BASE_URL } from "@/constants";
 import { getCookie } from "@/utils";
 import { useRouter } from "next/router";
-import { createContext, FC, useContext } from "react";
+import { createContext, FC, PropsWithChildren, useContext } from "react";
 import { AppContext } from "./app";
 
 /**
@@ -24,9 +24,7 @@ export const AuthContext = createContext({});
 /**
  * Auth Provider
  */
-export const AuthProvider: FC<{ children: React.ReactNode }> = ({
-  children,
-}) => {
+export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
   const user = useContext(AppContext);
   const accessToken = getCookie("token");
