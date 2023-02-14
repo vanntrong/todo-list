@@ -4,13 +4,13 @@ import { isStringEmpty } from "@/utils/validate";
 import { Input, Space } from "antd";
 import clsx from "clsx";
 import React, { FC, useEffect, useState } from "react";
-import { Task } from "../../interfaces/task.interface";
+import { ITask } from "../../interfaces/task.interface";
 
 export interface AddTaskProps {
   onClose?: () => void;
   isEditing?: boolean;
-  task?: Task;
-  onConfirm: (task: WithoutId<Task> | Task) => void;
+  task?: ITask;
+  onConfirm: (task: WithoutId<ITask> | ITask) => void;
 }
 
 const AddTask: FC<AddTaskProps> = ({
@@ -19,7 +19,7 @@ const AddTask: FC<AddTaskProps> = ({
   task: _task,
   onConfirm,
 }) => {
-  const [task, setTask] = useState<WithoutId<Task>>({
+  const [task, setTask] = useState<WithoutId<ITask>>({
     title: _task?.title || "",
     description: _task?.description,
     completed: _task?.completed || false,
@@ -40,6 +40,13 @@ const AddTask: FC<AddTaskProps> = ({
       ...prevState,
       [name]: value,
     }));
+  };
+
+  const resetValue = () => {
+    setTask({
+      title: "",
+      description: "",
+    });
   };
 
   return (
@@ -70,7 +77,10 @@ const AddTask: FC<AddTaskProps> = ({
             type="text"
             className="bg-red-500 text-white disabled:bg-red-100"
             disabled={isDisableAddTask}
-            onClick={() => onConfirm(task)}
+            onClick={() => {
+              onConfirm(task);
+              resetValue();
+            }}
           >
             {isEditing ? "Save" : "Add task"}
           </Button>

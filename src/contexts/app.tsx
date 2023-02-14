@@ -4,14 +4,16 @@ import { createContext, FC, PropsWithChildren } from "react";
 
 const AppContext = createContext<AppContextInterface>({
   user: undefined,
-  tasks: [],
+  list_tasks: [],
 });
 
 export const AppProvider: FC<PropsWithChildren> = ({ children }) => {
-  const { data: { tasks = [], id = "", name = "" } = {} } = useGetTasks();
+  const { data: { list_tasks = [], id = "", name = "" } = {} } = useGetTasks();
 
   return (
-    <AppContext.Provider value={{ tasks, user: { id, name } }}>
+    <AppContext.Provider
+      value={{ list_tasks, user: { id, name, list_tasks: [] } }}
+    >
       {children}
     </AppContext.Provider>
   );

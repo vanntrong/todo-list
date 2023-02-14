@@ -17,11 +17,11 @@ const menu = [
   },
 ];
 
-interface SidebarProps {
+interface ISidebarProps {
   isOpen: boolean;
 }
 
-const Sidebar: FC<SidebarProps> = ({ isOpen }) => {
+const Sidebar: FC<ISidebarProps> = ({ isOpen }) => {
   const router = useRouter();
 
   return (

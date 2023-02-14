@@ -1,30 +1,34 @@
+import { IUser } from "@/interfaces";
+import { loadDataFromFile, saveDataToFile } from "@/utils/helper";
 import { NextApiRequest, NextApiResponse } from "next";
-import path from "path";
-import { promises as fs } from "fs";
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse
 ) {
-  const { title = "Untitled", description, completed = false } = req.body;
+  const {
+    title = "Untitled",
+    description,
+    completed = false,
+    listId,
+  } = req.body;
+  if (!listId) return res.status(400).json({ message: "List id is required" });
+
   const task = {
     title: title,
     description: description,
     completed: completed,
     id: new Date().getTime().toString(),
+    listId,
   };
-  //Find the absolute path of the json directory
-  const jsonDirectory = path.join(process.cwd(), "mocks");
-  //Read the json data file data.json
-  const fileContents = await fs.readFile(
-    jsonDirectory + "/user-task.json",
-    "utf8"
+  const data = await loadDataFromFile<{ users: IUser[] }>("user-task.json");
+  data.users[0].list_tasks = data.users[0].list_tasks.map((list) =>
+    list.id === listId ? { ...list, tasks: [...list.tasks, task] } : list
   );
 
-  const data = JSON.parse(fileContents);
-  data.users[0].tasks.push(task);
+  console.log({ data });
 
-  fs.writeFile(jsonDirectory + "/user-task.json", JSON.stringify(data));
+  saveDataToFile("user-task.json", data);
 
   res.status(201).json(task);
 }

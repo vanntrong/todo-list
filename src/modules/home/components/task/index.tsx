@@ -2,7 +2,7 @@ import { WithoutId } from "@/interfaces";
 import { EditOutlined, RestOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Popconfirm, Typography } from "antd";
 import { FC, useState } from "react";
-import { Task } from "../../interfaces/task.interface";
+import { ITask } from "../../interfaces/task.interface";
 import useDeleteTask from "../../services/useDeleteTask";
 import useUpdateTask from "../../services/useUpdateTask";
 import AddTask from "../add-task";
@@ -11,7 +11,7 @@ import styles from "./task.module.css";
 const { Title, Text } = Typography;
 
 interface TaskProps {
-  task: Task;
+  task: ITask;
 }
 
 const Task: FC<TaskProps> = ({ task }) => {
@@ -56,7 +56,7 @@ const Task: FC<TaskProps> = ({ task }) => {
               placement="topLeft"
               title={"Are you sure to delete this task?"}
               description={"Delete the task"}
-              onConfirm={() => deleteTask(task.id)}
+              onConfirm={() => deleteTask({ id: task.id, listId: task.listId })}
               okText="Yes"
               cancelText="No"
               okButtonProps={{
@@ -72,8 +72,9 @@ const Task: FC<TaskProps> = ({ task }) => {
           onClose={() => setIsEditing(false)}
           isEditing
           task={task}
-          onConfirm={(data: WithoutId<Task>) => {
-            updateTask({ ...data, id: task.id });
+          onConfirm={(data: WithoutId<ITask>) => {
+            updateTask({ ...data, id: task.id, listId: task.listId });
+            setIsEditing(false);
           }}
         />
       )}

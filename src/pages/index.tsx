@@ -2,18 +2,39 @@ import Button from "@/components/button";
 import { AppContext } from "@/contexts/app";
 import DefaultLayout from "@/layouts/default/default.layout";
 import AddTask from "@/modules/home/components/add-task";
-import Task from "@/modules/home/components/task";
+import ListTaskVertical from "@/modules/home/components/list-task-vertical";
 import useCreateTask from "@/modules/home/services/useCreateTask";
+import useUpdateOrderTask from "@/modules/home/services/useUpdateOrderTask";
+import styles from "@/modules/home/styles/home.module.css";
 import { PlusOutlined } from "@ant-design/icons";
 import { Space, Typography } from "antd";
-import { useContext, useState } from "react";
-import styles from "@/modules/home/styles/home.module.css";
+import { useCallback, useContext, useState } from "react";
+import {
+  DragDropContext,
+  DropResult,
+  resetServerContext,
+} from "react-beautiful-dnd";
 
+const VERTICAL_LIST = "VERTICAL_LIST";
 export default function Home() {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
-  const { tasks } = useContext(AppContext);
+  const { list_tasks } = useContext(AppContext);
 
   const { mutate: createTask } = useCreateTask();
+  const { mutate: updateOrderTask } = useUpdateOrderTask();
+
+  const handleDragEnd = useCallback(
+    (result: DropResult) => {
+      if (!result.destination) return;
+      updateOrderTask({
+        sourceId: result.source.droppableId,
+        sourceIndex: result.source.index,
+        destinationId: result.destination?.droppableId,
+        destinationIndex: result.destination?.index,
+      });
+    },
+    [updateOrderTask]
+  );
 
   return (
     <DefaultLayout>
@@ -30,14 +51,12 @@ export default function Home() {
             size={"large"}
             className={styles["page-space"]}
           >
-            {tasks.map((task) => (
-              <>
-                <div>
-                  <Task key={task.id} task={task} />
-                  <div className="w-full h-[1px] bg-gray-100 mt-1"></div>
-                </div>
-              </>
-            ))}
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <ListTaskVertical
+                id={list_tasks[0]?.id || VERTICAL_LIST}
+                tasks={list_tasks[0]?.tasks || []}
+              />
+            </DragDropContext>
             {!isAddTaskVisible ? (
               <Button
                 type="link"
@@ -54,7 +73,12 @@ export default function Home() {
             ) : (
               <AddTask
                 onClose={() => setIsAddTaskVisible(false)}
-                onConfirm={(data) => createTask(data)}
+                onConfirm={(data) =>
+                  createTask({
+                    ...data,
+                    listId: list_tasks[0]?.id || "list-001",
+                  })
+                }
               />
             )}
           </Space>
@@ -63,3 +87,11 @@ export default function Home() {
     </DefaultLayout>
   );
 }
+
+export const getServerSideProps = async () => {
+  resetServerContext();
+
+  return {
+    props: {},
+  };
+};

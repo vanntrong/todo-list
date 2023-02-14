@@ -7,11 +7,11 @@ import { Avatar, Modal, Space } from "antd";
 import { FC, useContext, useState } from "react";
 import Button from "../button";
 
-interface HeaderProps {
+interface IHeaderProps {
   onToggleSidebar: () => void;
 }
 
-const Header: FC<HeaderProps> = ({ onToggleSidebar }) => {
+const Header: FC<IHeaderProps> = ({ onToggleSidebar }) => {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
   const { user } = useContext(AppContext);
 
@@ -47,7 +47,7 @@ const Header: FC<HeaderProps> = ({ onToggleSidebar }) => {
       <Modal open={isAddTaskVisible} footer={false} closable={false}>
         <AddTask
           onClose={() => setIsAddTaskVisible(false)}
-          onConfirm={(data) => createTask(data)}
+          onConfirm={(data) => createTask({ ...data, listId: "list-001" })}
         />
       </Modal>
     </header>
