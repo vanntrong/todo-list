@@ -1,12 +1,13 @@
-import DefaultLayout from "@/layouts/default/default.layout";
-import Task from "@/modules/home/components/task";
-import { Space, Typography } from "antd";
-import { PlusOutlined } from "@ant-design/icons";
 import Button from "@/components/button";
-import AddTask from "@/modules/home/components/add-task";
-import { useContext, useEffect, useState } from "react";
 import { AppContext } from "@/contexts/app";
+import DefaultLayout from "@/layouts/default/default.layout";
+import AddTask from "@/modules/home/components/add-task";
+import Task from "@/modules/home/components/task";
 import useCreateTask from "@/modules/home/services/useCreateTask";
+import { PlusOutlined } from "@ant-design/icons";
+import { Space, Typography } from "antd";
+import { useContext, useState } from "react";
+import styles from "@/modules/home/styles/home.module.css";
 
 export default function Home() {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
@@ -18,17 +19,17 @@ export default function Home() {
     <DefaultLayout>
       <div className="w-full flex justify-center pt-10">
         <div className="max-w-[600px] w-full">
-          <Typography.Title
-            level={1}
-            className="font-bold"
-            style={{ fontSize: 20 }}
-          >
+          <Typography.Title level={1} className={styles["page-title"]}>
             Today{" "}
             <span className="font-normal text-[12px] text-gray-600">
-              Mon 13 Feb
+              Mon 14 Feb
             </span>
           </Typography.Title>
-          <Space direction="vertical" size={"large"} style={{ width: "100%" }}>
+          <Space
+            direction="vertical"
+            size={"large"}
+            className={styles["page-space"]}
+          >
             {tasks.map((task) => (
               <Task key={task.id} task={task} />
             ))}

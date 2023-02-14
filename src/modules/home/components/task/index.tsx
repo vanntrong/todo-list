@@ -6,6 +6,7 @@ import { Task } from "../../interfaces/task.interface";
 import useDeleteTask from "../../services/useDeleteTask";
 import useUpdateTask from "../../services/useUpdateTask";
 import AddTask from "../add-task";
+import styles from "./task.module.css";
 
 const { Title, Text } = Typography;
 
@@ -31,13 +32,13 @@ const Task: FC<TaskProps> = ({ task }) => {
           <div className="ml-2">
             <Title
               level={5}
-              style={{ marginBottom: 0, fontSize: 15, fontWeight: 400 }}
               delete={task.completed}
+              className={styles["task-title"]}
             >
               {task.title}
             </Title>
             {task.description && (
-              <Text ellipsis={true} style={{ width: 300, fontSize: 12 }}>
+              <Text ellipsis={true} className={styles["task-description"]}>
                 {task.description}
               </Text>
             )}
@@ -58,7 +59,7 @@ const Task: FC<TaskProps> = ({ task }) => {
               okText="Yes"
               cancelText="No"
               okButtonProps={{
-                style: { backgroundColor: "#ff4d4f", borderColor: "#ff4d4f" },
+                className: styles["popconfirm-ok-button"],
               }}
             >
               <Button icon={<RestOutlined />} type="text" size="small"></Button>

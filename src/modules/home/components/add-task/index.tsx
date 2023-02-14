@@ -1,6 +1,6 @@
 import Button from "@/components/button";
 import { WithoutId } from "@/interfaces";
-import { isNotEmpty } from "@/utils/validate";
+import { isStringEmpty } from "@/utils/validate";
 import { Input, Space } from "antd";
 import clsx from "clsx";
 import React, { FC, useEffect, useState } from "react";
@@ -27,7 +27,7 @@ const AddTask: FC<AddTaskProps> = ({
   const [isDisableAddTask, setIsDisableAddTask] = useState<boolean>(true);
 
   useEffect(() => {
-    if (isNotEmpty(task.title)) {
+    if (isStringEmpty(task.title)) {
       setIsDisableAddTask(false);
       return;
     }
@@ -72,7 +72,7 @@ const AddTask: FC<AddTaskProps> = ({
             disabled={isDisableAddTask}
             onClick={() => onConfirm(task)}
           >
-            {!isEditing ? "Add task" : "Save"}
+            {isEditing ? "Save" : "Add task"}
           </Button>
         </Space>
       </div>

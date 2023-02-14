@@ -1,0 +1,11 @@
+.task-title {
+  @apply mb-0 text-[15px] font-normal !important;
+}
+
+.task-description {
+  @apply w-[300px] font-[12px] !important;
+}
+
+.popconfirm-ok-button {
+  @apply bg-[#ff4d4f]  border-[ff4d4f] !important;
+}

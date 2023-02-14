@@ -1,5 +1,4 @@
 import Header from "@/components/header";
-import Sidebar from "@/components/sidebar";
 import { SEO } from "@/constants/seo";
 import { SEO as SEO_INTERFACE } from "@/interfaces";
 import Head from "next/head";
