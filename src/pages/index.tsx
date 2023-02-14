@@ -10,15 +10,9 @@ import useCreateTask from "@/modules/home/services/useCreateTask";
 
 export default function Home() {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
-  const { tasks, setTasks } = useContext(AppContext);
+  const { tasks } = useContext(AppContext);
 
-  const { data, mutate: createTask } = useCreateTask();
-
-  useEffect(() => {
-    if (data) {
-      setTasks?.((prev) => [...prev, data]);
-    }
-  }, [data, setTasks]);
+  const { mutate: createTask } = useCreateTask();
 
   return (
     <DefaultLayout>

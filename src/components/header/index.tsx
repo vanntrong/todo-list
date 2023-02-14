@@ -4,21 +4,14 @@ import useCreateTask from "@/modules/home/services/useCreateTask";
 import { MenuOutlined } from "@ant-design/icons";
 import { HomeOutlined, PlusOutlined } from "@ant-design/icons/lib/icons";
 import { Avatar, Modal, Space } from "antd";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useState } from "react";
 import Button from "../button";
 
 const Header = () => {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
-  const { user, setTasks } = useContext(AppContext);
+  const { user } = useContext(AppContext);
 
-  const { data, mutate: createTask } = useCreateTask();
-
-  useEffect(() => {
-    if (data) {
-      setTasks?.((prev) => [...prev, data]);
-      setIsAddTaskVisible(false);
-    }
-  }, [data, setTasks]);
+  const { mutate: createTask } = useCreateTask();
 
   return (
     <header className="px-3 py-1 bg-red-500 flex items-center justify-between">

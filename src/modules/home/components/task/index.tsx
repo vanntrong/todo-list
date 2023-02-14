@@ -1,8 +1,7 @@
-import { AppContext } from "@/contexts/app";
 import { WithoutId } from "@/interfaces";
 import { EditOutlined, RestOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Popconfirm, Typography } from "antd";
-import { FC, useContext, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { Task } from "../../interfaces/task.interface";
 import useDeleteTask from "../../services/useDeleteTask";
 import useUpdateTask from "../../services/useUpdateTask";
@@ -16,24 +15,8 @@ interface TaskProps {
 
 const Task: FC<TaskProps> = ({ task }) => {
   const [isEditing, setIsEditing] = useState<boolean>(false);
-  const { setTasks } = useContext(AppContext);
-  const { data, mutate: updateTask } = useUpdateTask();
-  const { data: deleteRes, mutate: deleteTask } = useDeleteTask();
-
-  useEffect(() => {
-    if (data) {
-      setTasks?.((prev) =>
-        prev.map((task) => (task.id === data.id ? data : task))
-      );
-      setIsEditing(false);
-    }
-  }, [data, setTasks]);
-
-  useEffect(() => {
-    if (deleteRes) {
-      setTasks?.((prev) => prev.filter((t) => t.id !== deleteRes.id));
-    }
-  }, [deleteRes, setTasks]);
+  const { mutate: updateTask } = useUpdateTask();
+  const { mutate: deleteTask } = useDeleteTask();
 
   return (
     <>
