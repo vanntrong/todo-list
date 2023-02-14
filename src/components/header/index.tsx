@@ -4,10 +4,14 @@ import useCreateTask from "@/modules/home/services/useCreateTask";
 import { MenuOutlined } from "@ant-design/icons";
 import { HomeOutlined, PlusOutlined } from "@ant-design/icons/lib/icons";
 import { Avatar, Modal, Space } from "antd";
-import { useContext, useState } from "react";
+import { FC, useContext, useState } from "react";
 import Button from "../button";
 
-const Header = () => {
+interface HeaderProps {
+  onToggleSidebar: () => void;
+}
+
+const Header: FC<HeaderProps> = ({ onToggleSidebar }) => {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
   const { user } = useContext(AppContext);
 
@@ -19,6 +23,7 @@ const Header = () => {
         <Button
           icon={<MenuOutlined style={{ fontSize: 18, color: "white" }} />}
           type="text"
+          onClick={onToggleSidebar}
         />
         <Button
           icon={<HomeOutlined style={{ fontSize: 18, color: "white" }} />}

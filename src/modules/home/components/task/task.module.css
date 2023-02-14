@@ -3,9 +3,21 @@
 }
 
 .task-description {
-  @apply w-[300px] font-[12px] !important;
+  @apply w-[300px] text-xs !important;
 }
 
 .popconfirm-ok-button {
   @apply bg-[#ff4d4f]  border-[ff4d4f] !important;
+}
+
+/* MyComponent.module.css */
+
+.ant-checkbox-wrapper {
+  position: relative;
+  padding-left: 1.5rem;
+  line-height: 1.5rem;
+}
+
+.ant-checkbox-wrapper .ant-checkbox-inner {
+  display: none;
 }

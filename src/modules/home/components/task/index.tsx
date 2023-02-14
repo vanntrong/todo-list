@@ -28,6 +28,7 @@ const Task: FC<TaskProps> = ({ task }) => {
             onChange={(e) =>
               updateTask({ ...task, completed: e.target.checked })
             }
+            className={styles["ant-checkbox-wrapper"]}
           />
           <div className="ml-2">
             <Title

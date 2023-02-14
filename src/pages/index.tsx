@@ -31,7 +31,12 @@ export default function Home() {
             className={styles["page-space"]}
           >
             {tasks.map((task) => (
-              <Task key={task.id} task={task} />
+              <>
+                <div>
+                  <Task key={task.id} task={task} />
+                  <div className="w-full h-[1px] bg-gray-100 mt-1"></div>
+                </div>
+              </>
             ))}
             {!isAddTaskVisible ? (
               <Button

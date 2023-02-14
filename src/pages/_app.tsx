@@ -2,6 +2,7 @@ import { AppProvider } from "@/contexts/app";
 import { AuthProvider } from "@/contexts/auth";
 import "@/styles/globals.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ConfigProvider, theme } from "antd";
 import type { AppProps } from "next/app";
 
 const queryClient = new QueryClient();
