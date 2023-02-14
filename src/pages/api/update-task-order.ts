@@ -25,5 +25,10 @@ export default async function handler(
 
   saveDataToFile("user-task.json", data);
 
-  return res.status(200).json(data);
+  return res.status(200).json({
+    sourceId,
+    sourceIndex,
+    destinationId,
+    destinationIndex,
+  });
 }

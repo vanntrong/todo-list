@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { FC } from "react";
 import { Draggable, Droppable } from "react-beautiful-dnd";
 import { ITask } from "../../interfaces/task.interface";
@@ -12,7 +13,11 @@ const ListTaskVertical: FC<Props> = ({ id, tasks = [] }) => {
   return (
     <Droppable droppableId={id}>
       {(provided, snapshot) => (
-        <div {...provided.droppableProps} ref={provided.innerRef}>
+        <div
+          {...provided.droppableProps}
+          ref={provided.innerRef}
+          className={clsx("flex flex-col gap-3", {})}
+        >
           {tasks.map((task, index) => (
             <Draggable key={task.id} draggableId={task.id} index={index}>
               {(provided, snapshot) => (
@@ -20,6 +25,9 @@ const ListTaskVertical: FC<Props> = ({ id, tasks = [] }) => {
                   ref={provided.innerRef}
                   {...provided.draggableProps}
                   {...provided.dragHandleProps}
+                  className={clsx("h-[45px]", {
+                    "shadow-xl bg-white": snapshot.isDragging,
+                  })}
                 >
                   <Task task={task} />
                 </div>
