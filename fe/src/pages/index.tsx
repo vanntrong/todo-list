@@ -1,84 +1,67 @@
 import Button from "@/components/button";
 import { AppContext } from "@/contexts/app";
 import DefaultLayout from "@/layouts/default/default.layout";
-import AddTask from "@/modules/home/components/add-task";
-import ButtonAddTask from "@/modules/home/components/button-add-task";
-import ListTaskVertical from "@/modules/home/components/list-task-vertical";
-import useCreateTask from "@/modules/home/services/useCreateTask";
+import ModalAddList from "@/modules/home/components/modal-add-list";
+import useCreateList from "@/modules/home/services/useCreateList";
 import useUpdateOrderTask from "@/modules/home/services/useUpdateOrderTask";
-import styles from "@/modules/home/styles/home.module.css";
+import UpcomingListTask from "@/modules/upcoming/components/upcoming-list-task";
 import { PlusOutlined } from "@ant-design/icons";
-import { Space, Typography } from "antd";
-import { useCallback, useContext, useState } from "react";
-import {
-  DragDropContext,
-  DropResult,
-  resetServerContext,
-} from "react-beautiful-dnd";
+import { Typography } from "antd";
+import { useContext, useState } from "react";
+import { DragDropContext, DropResult } from "react-beautiful-dnd";
 
-const VERTICAL_LIST = "VERTICAL_LIST";
-export default function Home() {
-  const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
+const Home = () => {
   const { list_tasks } = useContext(AppContext);
-
-  const { mutate: createTask } = useCreateTask();
   const { mutate: updateOrderTask } = useUpdateOrderTask();
+  const { mutate: createList } = useCreateList();
 
-  const handleDragEnd = useCallback(
-    (result: DropResult) => {
-      if (!result.destination) return;
-      updateOrderTask({
-        sourceId: result.source.droppableId,
-        sourceIndex: result.source.index,
-        destinationId: result.destination?.droppableId,
-        destinationIndex: result.destination?.index,
-      });
-    },
-    [updateOrderTask]
-  );
+  const [isAddListVisible, setIsAddListVisible] = useState(false);
+
+  const handleDragEnd = (res: DropResult) => {
+    if (!res.destination) return;
+
+    updateOrderTask({
+      sourceId: res.source.droppableId,
+      sourceIndex: res.source.index,
+      destinationId: res.destination.droppableId,
+      destinationIndex: res.destination.index,
+    });
+  };
 
   return (
     <DefaultLayout>
-      <div className="w-full flex justify-center pt-10">
-        <div className="max-w-[600px] w-full">
-          <Space
-            direction="vertical"
-            size={"large"}
-            className={styles["page-space"]}
-          >
-            {!!list_tasks.length && (
-              <DragDropContext onDragEnd={handleDragEnd}>
-                <ListTaskVertical
-                  id={list_tasks[0]._id || VERTICAL_LIST}
-                  tasks={list_tasks[0].tasks || []}
-                  title={list_tasks[0].title}
-                />
-              </DragDropContext>
-            )}
-            {!isAddTaskVisible && !!list_tasks.length ? (
-              <ButtonAddTask onClick={() => setIsAddTaskVisible(true)} />
-            ) : (
-              <AddTask
-                onClose={() => setIsAddTaskVisible(false)}
-                onConfirm={(data) =>
-                  createTask({
-                    ...data,
-                    list_id: list_tasks[0]._id,
-                  })
-                }
-              />
-            )}
-          </Space>
+      <div className="w-full pt-10 pl-5">
+        <div className="flex gap-10">
+          <DragDropContext onDragEnd={handleDragEnd}>
+            {list_tasks.map((list) => (
+              <UpcomingListTask key={list._id} list={list} />
+            ))}
+          </DragDropContext>
+          <ModalAddList
+            visible={isAddListVisible}
+            onCancel={() => setIsAddListVisible(false)}
+            onConfirm={(data) => {
+              createList(data);
+              setIsAddListVisible(false);
+            }}
+          />
+
+          {!isAddListVisible && (
+            <Button
+              icon={
+                <PlusOutlined className="group-hover:text-red-500 text-gray-900" />
+              }
+              onClick={() => setIsAddListVisible(true)}
+            >
+              <Typography.Text className="group-hover:text-red-500 text-gray-900">
+                Add list
+              </Typography.Text>
+            </Button>
+          )}
         </div>
       </div>
     </DefaultLayout>
   );
-}
-
-export const getServerSideProps = async () => {
-  resetServerContext();
-
-  return {
-    props: {},
-  };
 };
+
+export default Home;

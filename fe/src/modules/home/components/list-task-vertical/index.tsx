@@ -23,8 +23,6 @@ const ListTaskVertical: FC<Props> = ({
   title,
   isMultipleList,
 }) => {
-  console.log("tasks", tasks);
-
   return (
     <Droppable droppableId={id}>
       {(provided) => (

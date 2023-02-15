@@ -10,11 +10,6 @@ const menu = [
     icon: <CalendarOutlined style={{ color: "green" }} />,
     link: "/",
   },
-  {
-    title: "Upcoming",
-    icon: <ContainerOutlined style={{ color: "purple" }} />,
-    link: "/upcoming",
-  },
 ];
 
 interface ISidebarProps {
