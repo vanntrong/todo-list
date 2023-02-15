@@ -1,9 +1,0 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-/* :where(.css-dev-only-do-not-override-j0nf2s).ant-btn-text:not(:disabled):hover {
-  color: #fff;
-  --tw-bg-opacity: 1;
-  background-color: rgb(185 28 28 / var(--tw-bg-opacity));
-} */

@@ -1,0 +1,32 @@
+version: '3'
+services:
+  # api:
+  #   build: ../
+  #   ports:
+  #     - 8080:8080
+  #     - 9229:9229
+  #   volumes:
+  #     - ../:/usr/src/app
+  #   command: npm run start:prod
+  #   networks:
+  #     - nestjs
+  #   depends_on:
+  #     - mongodb
+
+  mongodb:
+    image: mongo
+    container_name: zingmp3_mongodb
+    ports:
+      - ${DB_PORT}:27017
+    environment:
+      MONGO_INITDB_DATABASE: ${DB_NAME}
+      MONGO_INITDB_ROOT_USERNAME: ${DB_USERNAME}
+      MONGO_INITDB_ROOT_PASSWORD: ${DB_PASSWORD}
+    networks:
+      - nestjs
+    volumes:
+      - ./db/mongo:/data/db
+    restart: always
+
+networks:
+  nestjs:
