@@ -1,7 +1,0 @@
-.task-title {
-  @apply text-sm font-normal mb-0 !important;
-}
-
-.task-description {
-  @apply text-xs font-normal mb-0 mt-0 !important;
-}
