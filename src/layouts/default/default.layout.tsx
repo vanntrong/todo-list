@@ -63,7 +63,10 @@ export default function DefaultLayout({
         />
       </Head>
       <div>
-        <Header onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)} />
+        <Header
+          onToggleSidebar={() => setIsSidebarOpen((prev) => !prev)}
+          isSidebarOpen={isSidebarOpen}
+        />
         <main className="flex h-full min-h-screen">
           <Sidebar isOpen={isSidebarOpen} />
 

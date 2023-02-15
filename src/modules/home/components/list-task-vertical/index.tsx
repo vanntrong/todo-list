@@ -12,11 +12,11 @@ interface Props {
 const ListTaskVertical: FC<Props> = ({ id, tasks = [] }) => {
   return (
     <Droppable droppableId={id}>
-      {(provided, snapshot) => (
+      {(provided) => (
         <div
           {...provided.droppableProps}
           ref={provided.innerRef}
-          className={clsx("flex flex-col gap-3", {})}
+          className={clsx("flex flex-col gap-3")}
         >
           {tasks.map((task, index) => (
             <Draggable key={task.id} draggableId={task.id} index={index}>

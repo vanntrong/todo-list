@@ -4,16 +4,19 @@ import useCreateTask from "@/modules/home/services/useCreateTask";
 import { MenuOutlined } from "@ant-design/icons";
 import { HomeOutlined, PlusOutlined } from "@ant-design/icons/lib/icons";
 import { Avatar, Modal, Space } from "antd";
+import { useRouter } from "next/router";
 import { FC, useContext, useState } from "react";
 import Button from "../button";
 
 interface IHeaderProps {
   onToggleSidebar: () => void;
+  isSidebarOpen: boolean;
 }
 
-const Header: FC<IHeaderProps> = ({ onToggleSidebar }) => {
+const Header: FC<IHeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
   const { user } = useContext(AppContext);
+  const router = useRouter();
 
   const { mutate: createTask } = useCreateTask();
 
@@ -24,10 +27,13 @@ const Header: FC<IHeaderProps> = ({ onToggleSidebar }) => {
           icon={<MenuOutlined style={{ fontSize: 18, color: "white" }} />}
           type="text"
           onClick={onToggleSidebar}
+          title={`${isSidebarOpen ? "Close" : "Open"} sidebar`}
         />
         <Button
           icon={<HomeOutlined style={{ fontSize: 18, color: "white" }} />}
           type="text"
+          onClick={() => router.push("/")}
+          title="Go to home"
         />
       </Space>
       <Space size={"middle"}>
