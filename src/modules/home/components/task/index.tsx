@@ -56,7 +56,9 @@ const Task: FC<TaskProps> = ({ task }) => {
               placement="topLeft"
               title={"Are you sure to delete this task?"}
               description={"Delete the task"}
-              onConfirm={() => deleteTask({ id: task.id, listId: task.listId })}
+              onConfirm={() =>
+                deleteTask({ id: task._id, list_id: task.list_id })
+              }
               okText="Yes"
               cancelText="No"
               okButtonProps={{
@@ -73,7 +75,7 @@ const Task: FC<TaskProps> = ({ task }) => {
           isEditing
           task={task}
           onConfirm={(data: WithoutId<ITask>) => {
-            updateTask({ ...data, id: task.id, listId: task.listId });
+            updateTask({ ...data, _id: task._id, list_id: task.list_id });
             setIsEditing(false);
           }}
         />

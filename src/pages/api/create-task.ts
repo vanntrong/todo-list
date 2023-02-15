@@ -26,8 +26,6 @@ export default async function handler(
     list.id === listId ? { ...list, tasks: [...list.tasks, task] } : list
   );
 
-  console.log({ data });
-
   saveDataToFile("user-task.json", data);
 
   res.status(201).json(task);

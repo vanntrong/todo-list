@@ -2,6 +2,7 @@ import Button from "@/components/button";
 import { AppContext } from "@/contexts/app";
 import DefaultLayout from "@/layouts/default/default.layout";
 import AddTask from "@/modules/home/components/add-task";
+import ButtonAddTask from "@/modules/home/components/button-add-task";
 import ListTaskVertical from "@/modules/home/components/list-task-vertical";
 import useCreateTask from "@/modules/home/services/useCreateTask";
 import useUpdateOrderTask from "@/modules/home/services/useUpdateOrderTask";
@@ -51,32 +52,23 @@ export default function Home() {
             size={"large"}
             className={styles["page-space"]}
           >
-            <DragDropContext onDragEnd={handleDragEnd}>
-              <ListTaskVertical
-                id={list_tasks[0]?.id || VERTICAL_LIST}
-                tasks={list_tasks[0]?.tasks || []}
-              />
-            </DragDropContext>
-            {!isAddTaskVisible ? (
-              <Button
-                type="link"
-                className="group gap-x-2"
-                icon={
-                  <PlusOutlined className="group-hover:text-red-500 text-gray-900" />
-                }
-                onClick={() => setIsAddTaskVisible(true)}
-              >
-                <Typography.Text className="group-hover:text-red-500 text-gray-900">
-                  Add task
-                </Typography.Text>
-              </Button>
+            {!!list_tasks.length && (
+              <DragDropContext onDragEnd={handleDragEnd}>
+                <ListTaskVertical
+                  id={list_tasks[0]._id || VERTICAL_LIST}
+                  tasks={list_tasks[0].tasks || []}
+                />
+              </DragDropContext>
+            )}
+            {!isAddTaskVisible && !!list_tasks.length ? (
+              <ButtonAddTask onClick={() => setIsAddTaskVisible(true)} />
             ) : (
               <AddTask
                 onClose={() => setIsAddTaskVisible(false)}
                 onConfirm={(data) =>
                   createTask({
                     ...data,
-                    listId: list_tasks[0]?.id || "list-001",
+                    list_id: list_tasks[0]._id,
                   })
                 }
               />

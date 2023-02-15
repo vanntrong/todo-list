@@ -15,7 +15,7 @@ interface IHeaderProps {
 
 const Header: FC<IHeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
   const [isAddTaskVisible, setIsAddTaskVisible] = useState<boolean>(false);
-  const { user } = useContext(AppContext);
+  const { user, list_tasks } = useContext(AppContext);
   const router = useRouter();
 
   const { mutate: createTask } = useCreateTask();
@@ -47,13 +47,15 @@ const Header: FC<IHeaderProps> = ({ onToggleSidebar, isSidebarOpen }) => {
           }
         />
         <Button shape="circle" className="flex items-center">
-          <Avatar>{user?.name.charAt(0)}</Avatar>
+          <Avatar>{user?.full_name.charAt(0)}</Avatar>
         </Button>
       </Space>
       <Modal open={isAddTaskVisible} footer={false} closable={false}>
         <AddTask
           onClose={() => setIsAddTaskVisible(false)}
-          onConfirm={(data) => createTask({ ...data, listId: "list-001" })}
+          onConfirm={(data) =>
+            createTask({ ...data, list_id: list_tasks[0]._id })
+          }
         />
       </Modal>
     </header>

@@ -7,7 +7,7 @@ const request = axios.create({
 });
 
 request.interceptors.request.use((config) => {
-  const token = getCookie("token");
+  const token = getCookie("access_token");
   if (token) {
     config.headers.Authorization = `Bearer ${token}`;
   }
@@ -15,17 +15,8 @@ request.interceptors.request.use((config) => {
   return config;
 });
 
-request.interceptors.response.use(
-  (response) => {
-    return response.data;
-  },
-  (error) => {
-    if (error.response.status === 401) {
-      window.location.href = "/login";
-    }
-
-    return Promise.reject(error);
-  }
-);
+request.interceptors.response.use((response) => {
+  return response.data.data;
+});
 
 export default request;

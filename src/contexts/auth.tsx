@@ -1,5 +1,4 @@
 import { pageRoutes } from "@/configs/navigations";
-import { BASE_URL } from "@/constants";
 import { getCookie } from "@/utils";
 import { useRouter } from "next/router";
 import { createContext, FC, PropsWithChildren, useContext } from "react";
@@ -26,38 +25,23 @@ export const AuthContext = createContext({});
  */
 export const AuthProvider: FC<PropsWithChildren> = ({ children }) => {
   const router = useRouter();
-  const user = useContext(AppContext);
-  const accessToken = getCookie("token");
+  const accessToken = getCookie("access_token");
+  const { user } = useContext(AppContext);
 
   if (typeof window === "undefined") return children as JSX.Element;
 
-  const renderContent = (backToLogin = false) => {
-    // Get path name & query params
-    const locationHref = window?.location?.href;
-    const pathName = window?.location?.pathname;
-    const params = new URLSearchParams(window?.location?.search);
-    const redirectURL = params.get("next");
-    // Is Login route
-    const isLoginRoute = pathName === pageRoutes.signIn.pathname;
-    // Handle the redirection on the login page / another page
-    if (isLoginRoute) {
-      if (user && accessToken) {
-        window.location.href =
-          redirectURL || BASE_URL + pageRoutes.home.pathname;
-      }
-    } else if (!user) {
-      if (isAuthenticatedRoute(pathName) || backToLogin) {
-        router
-          .push({
-            pathname: pageRoutes.signIn.pathname,
-            query: {
-              next: locationHref,
-            },
-          })
-          .catch(() => "");
-        return "";
+  const renderContent = () => {
+    const isLoginRoute = router.pathname === pageRoutes.signIn.pathname;
+    if (isLoginRoute && accessToken && user) {
+      router.push(pageRoutes.home.pathname);
+      return null;
+    } else if (!isLoginRoute) {
+      if (isAuthenticatedRoute(router.pathname) && (!accessToken || !user)) {
+        router.push(pageRoutes.signIn.pathname);
+        return null;
       }
     }
+
     return children;
   };
 

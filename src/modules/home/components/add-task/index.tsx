@@ -21,7 +21,7 @@ const AddTask: FC<AddTaskProps> = ({
 }) => {
   const [task, setTask] = useState<WithoutId<ITask>>({
     title: _task?.title || "",
-    description: _task?.description,
+    description: _task?.description || undefined,
     completed: _task?.completed || false,
   });
   const [isDisableAddTask, setIsDisableAddTask] = useState<boolean>(true);
@@ -45,7 +45,7 @@ const AddTask: FC<AddTaskProps> = ({
   const resetValue = () => {
     setTask({
       title: "",
-      description: "",
+      description: undefined,
     });
   };
 

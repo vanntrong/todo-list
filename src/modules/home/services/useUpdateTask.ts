@@ -9,7 +9,10 @@ const useUpdateTask = () => {
   return useMutation(
     ["tasks"],
     async (task: ITask | Partial<ITask>) => {
-      return request.put<ITask, ITask>(`/update-task`, task);
+      return request.put<ITask, ITask>(
+        `/todos/${task.list_id}/tasks/${task._id}`,
+        task
+      );
     },
     {
       onSuccess() {

@@ -20,9 +20,12 @@ export interface ISEO {
 }
 
 export interface IUser {
-  id: string;
-  name: string;
-  list_tasks: IListTask[];
+  _id: string;
+  email: string;
+  avatar: string;
+  created_at: string;
+  full_name: string;
+  // list_tasks: IListTask[];
 }
 
 export type WithoutId<T> = { [K in Exclude<keyof T, "id">]?: T[K] } & {};

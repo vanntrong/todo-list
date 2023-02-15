@@ -1,13 +1,22 @@
 export interface ITask {
+  _id: string;
+  list_id: string;
   title: string;
   description?: string;
-  id: string;
   completed: boolean;
-  listId: string;
+  created_at: Date;
+  updated_at?: Date;
+  tag?: string;
 }
 
 export interface IListTask {
-  id: string;
+  author: string;
   title: string;
+  description?: string;
+  is_today: boolean;
+  created_at: Date;
+  updated_at?: Date;
+  tag?: string;
   tasks: ITask[];
+  _id: string;
 }

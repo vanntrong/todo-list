@@ -9,6 +9,6 @@ export const pageRoutes = {
   },
   home: {
     pathname: "/",
-    isAuthenticated: false,
+    isAuthenticated: true,
   },
 };

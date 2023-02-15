@@ -6,20 +6,20 @@ import { USE_GET_TASKS_QUERY_KEY } from "./useGetTasks";
 
 interface IDeleteTaskPayload {
   id: string;
-  listId: string;
+  list_id: string;
 }
 
 const useDeleteTask = () => {
   const queryClient = useQueryClient();
   return useMutation(
     ["tasks"],
-    async ({ id, listId }: IDeleteTaskPayload) => {
-      return request.post<WithoutId<ITask>, ITask>(
-        `/delete-task?id=${id}&listId=${listId}`
+    async ({ id, list_id }: IDeleteTaskPayload) => {
+      return request.delete<WithoutId<ITask>, ITask>(
+        `/todos/${list_id}/tasks/${id}`
       );
     },
     {
-      onSuccess(data) {
+      onSuccess() {
         queryClient.invalidateQueries([USE_GET_TASKS_QUERY_KEY]);
       },
     }
